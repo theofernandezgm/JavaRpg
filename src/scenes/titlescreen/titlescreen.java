@@ -1,4 +1,5 @@
 package scenes.titlescreen;
+import utils.musicplayer;
 
 import javax.imageio.ImageIO;
 import javax.swing.*;
@@ -9,10 +10,11 @@ import java.io.InputStream;
 
 public class titlescreen extends JPanel {
     private BufferedImage image;
+    private musicplayer musicPlayer;
 
     public titlescreen() {
         try {
-            InputStream imageStream = getClass().getResourceAsStream("/assets/titlescreen/background/mainmenu.png");
+            InputStream imageStream = getClass().getResourceAsStream("/assets/images/titlescreen/background/mainmenu.png");
             if (imageStream != null) {
                 image = ImageIO.read(imageStream);
             } else {
@@ -21,6 +23,9 @@ public class titlescreen extends JPanel {
         } catch (IOException e) {
             System.err.println("Error loading image: " + e.getMessage());
         }
+
+        musicPlayer = new musicplayer();
+        musicPlayer.play("/assets/music/title.wav");
     }
 
     @Override
@@ -28,6 +33,11 @@ public class titlescreen extends JPanel {
         super.paintComponent(g);
         if (image != null) {
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
+        }
+    }
+    public void stop() {
+        if (musicPlayer != null) {
+            musicPlayer.stop();
         }
     }
 }

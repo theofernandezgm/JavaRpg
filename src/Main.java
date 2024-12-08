@@ -1,4 +1,4 @@
-import display.display;
+import utils.display;
 import scenes.titlescreen.titlescreen;
 
 public class Main {
