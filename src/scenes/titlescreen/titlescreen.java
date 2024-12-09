@@ -1,4 +1,5 @@
 package scenes.titlescreen;
+
 import utils.musicplayer;
 
 import javax.imageio.ImageIO;
@@ -26,6 +27,33 @@ public class titlescreen extends JPanel {
 
         musicPlayer = new musicplayer();
         musicPlayer.play("/assets/music/title.wav");
+
+        setLayout(null);
+
+        JButton newGameButton = createButton("/assets/images/titlescreen/buttons/newgame.png", 100, 300, 200, 50);
+        newGameButton.addActionListener(e -> System.out.println("New Game button clicked!"));
+
+        add(newGameButton);
+    }
+
+    private JButton createButton(String imagePath, int x, int y, int width, int height) {
+        JButton button = new JButton();
+        try {
+            InputStream buttonStream = getClass().getResourceAsStream(imagePath);
+            if (buttonStream != null) {
+                ImageIcon icon = new ImageIcon(ImageIO.read(buttonStream));
+                button.setIcon(icon);
+            } else {
+                System.err.println("Button image not found!");
+            }
+        } catch (IOException e) {
+            System.err.println("Error loading button image: " + e.getMessage());
+        }
+        button.setBounds(x, y, width, height);
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        return button;
     }
 
     @Override
@@ -35,6 +63,7 @@ public class titlescreen extends JPanel {
             g.drawImage(image, 0, 0, getWidth(), getHeight(), this);
         }
     }
+
     public void stop() {
         if (musicPlayer != null) {
             musicPlayer.stop();
